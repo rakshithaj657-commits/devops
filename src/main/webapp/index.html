@@ -3,411 +3,203 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NeuroAI - AI Startup</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>Netflix Clone</title>
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-scroll-behavior:smooth;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial;
 }
 
 body{
-background:#08111f;
-color:white;
-overflow-x:hidden;
+    background:#111;
+    color:white;
 }
 
-header{
-position:fixed;
-top:0;
-width:100%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 8%;
-background:rgba(0,0,0,.7);
-backdrop-filter:blur(10px);
-z-index:1000;
+/* NAVBAR */
+.nav{
+    display:flex;
+    justify-content:space-between;
+    padding:15px 50px;
+    position:fixed;
+    width:100%;
+    background:rgba(0,0,0,0.7);
+    z-index:1000;
 }
 
 .logo{
-font-size:28px;
-font-weight:700;
-color:#00e5ff;
+    color:#e50914;
+    font-size:28px;
+    font-weight:bold;
 }
 
-nav a{
-text-decoration:none;
-color:white;
-margin-left:25px;
-transition:.3s;
+.nav ul{
+    display:flex;
+    gap:20px;
+    list-style:none;
+    color:#ddd;
 }
 
-nav a:hover{
-color:#00e5ff;
-}
-
+/* HERO SLIDER */
 .hero{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:20px;
-background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),
-url("https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1600&q=80") center/cover;
+    height:80vh;
+    position:relative;
+    overflow:hidden;
 }
 
-.hero h1{
-font-size:60px;
-color:#00e5ff;
-margin-bottom:20px;
+.slide{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+    opacity:0;
+    transition:1s;
 }
 
-.hero p{
-max-width:700px;
-margin:auto;
-line-height:1.8;
-font-size:18px;
-margin-bottom:30px;
+.slide.active{
+    opacity:1;
 }
 
-.btn{
-display:inline-block;
-padding:15px 35px;
-background:#00e5ff;
-color:black;
-text-decoration:none;
-font-weight:bold;
-border-radius:40px;
-transition:.3s;
+.overlay{
+    position:absolute;
+    bottom:100px;
+    left:60px;
 }
 
-.btn:hover{
-background:white;
-transform:scale(1.05);
+.overlay h1{
+    font-size:50px;
 }
 
-section{
-padding:90px 8%;
+.overlay p{
+    width:400px;
+    color:#ccc;
 }
 
-.title{
-text-align:center;
-font-size:38px;
-margin-bottom:40px;
-color:#00e5ff;
+.overlay button{
+    margin-top:20px;
+    padding:10px 20px;
+    background:#e50914;
+    border:none;
+    color:white;
+    cursor:pointer;
 }
 
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
+/* ROWS */
+.row{
+    margin:20px 40px;
+}
+
+.row h2{
+    margin:10px 0;
+}
+
+.movies{
+    display:flex;
+    overflow-x:auto;
+    gap:10px;
+}
+
+.movies::-webkit-scrollbar{
+    display:none;
 }
 
 .card{
-background:#101c2d;
-padding:30px;
-border-radius:15px;
-text-align:center;
-transition:.4s;
+    min-width:160px;
+    height:220px;
+    border-radius:8px;
+    overflow:hidden;
+    transition:0.3s;
+    cursor:pointer;
+}
+
+.card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
 .card:hover{
-transform:translateY(-10px);
-box-shadow:0 0 20px #00e5ff;
+    transform:scale(1.1);
 }
-
-.card h3{
-margin:15px 0;
-}
-
-.stats{
-display:flex;
-justify-content:center;
-gap:40px;
-flex-wrap:wrap;
-text-align:center;
-}
-
-.number{
-font-size:45px;
-font-weight:bold;
-color:#00e5ff;
-}
-
-.gallery{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:20px;
-}
-
-.gallery img{
-width:100%;
-height:220px;
-object-fit:cover;
-border-radius:15px;
-transition:.4s;
-}
-
-.gallery img:hover{
-transform:scale(1.05);
-}
-
-.contact{
-text-align:center;
-background:#101c2d;
-padding:40px;
-border-radius:20px;
-}
-
-.contact p{
-margin:15px;
-}
-
-footer{
-background:black;
-text-align:center;
-padding:25px;
-margin-top:40px;
-}
-
-#top{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#00e5ff;
-border:none;
-padding:12px 18px;
-font-size:18px;
-border-radius:50%;
-cursor:pointer;
-display:none;
-}
-
-@media(max-width:768px){
-
-.hero h1{
-font-size:38px;
-}
-
-nav{
-display:none;
-}
-
-}
-
 </style>
-
 </head>
 
 <body>
 
-<header>
-
-<div class="logo">🤖 NeuroAI</div>
-
-<nav>
-<a href="#">Home</a>
-<a href="#about">About</a>
-<a href="#services">Services</a>
-<a href="#projects">Projects</a>
-<a href="#contact">Contact</a>
-</nav>
-
-</header>
-
-<section class="hero">
-
-<div>
-
-<h1>Future Powered By Artificial Intelligence</h1>
-
-<p>
-
-NeuroAI develops intelligent AI solutions that automate business,
-improve productivity, and transform industries using Machine Learning,
-Cloud Computing, and Data Analytics.
-
-</p>
-
-<a href="#about" class="btn">Discover More</a>
-
+<!-- NAV -->
+<div class="nav">
+    <div class="logo">NETFLIX</div>
+    <ul>
+        <li>Home</li>
+        <li>TV Shows</li>
+        <li>Movies</li>
+        <li>My List</li>
+    </ul>
 </div>
 
-</section>
+<!-- HERO SLIDER (3 REAL IMAGE BACKGROUNDS) -->
+<div class="hero">
 
-<section id="about">
+    <div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1524985069026-dd778a71c7b4');"></div>
 
-<h2 class="title">About NeuroAI</h2>
+    <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1509347528160-9a9e33742cdb');"></div>
 
-<div class="cards">
+    <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba');"></div>
 
-<div class="card">
-<h3>🤖 AI Automation</h3>
-<p>Automate repetitive tasks using smart AI models.</p>
+    <div class="overlay">
+        <h1>Unlimited Movies & Series</h1>
+        <p>Watch anywhere. Cancel anytime. Netflix clone UI built using HTML, CSS & JavaScript.</p>
+        <button>▶ Play</button>
+    </div>
 </div>
 
-<div class="card">
-<h3>☁ Cloud AI</h3>
-<p>Deploy AI applications securely on cloud platforms.</p>
+<!-- ROW 1 -->
+<div class="row">
+    <h2>Trending Now</h2>
+    <div class="movies">
+        <div class="card"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1"></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1502139214982-d0ad755818d8"></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1517602302552-471fe67acf66"></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae"></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba"></div>
+    </div>
 </div>
 
-<div class="card">
-<h3>📊 Data Intelligence</h3>
-<p>Convert business data into valuable insights.</p>
+<!-- ROW 2 -->
+<div class="row">
+    <h2>Top Rated</h2>
+    <div class="movies">
+        <div class="card"><img src="https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37"></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1517602302552-471fe67acf66"></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1509347528160-9a9e33742cdb"></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba"></div>
+    </div>
 </div>
 
+<!-- ROW 3 -->
+<div class="row">
+    <h2>Action Movies</h2>
+    <div class="movies">
+        <div class="card"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1"></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1517602302552-471fe67acf66"></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1524985069026-dd778a71c7b4"></div>
+        <div class="card"><img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba"></div>
+    </div>
 </div>
-
-</section>
-
-<section id="services">
-
-<h2 class="title">Our Services</h2>
-
-<div class="cards">
-
-<div class="card">
-<h3>Machine Learning</h3>
-<p>Custom predictive AI models for business growth.</p>
-</div>
-
-<div class="card">
-<h3>Computer Vision</h3>
-<p>Image recognition and intelligent surveillance systems.</p>
-</div>
-
-<div class="card">
-<h3>AI Chatbots</h3>
-<p>24×7 customer support with conversational AI.</p>
-</div>
-
-<div class="card">
-<h3>Cloud Deployment</h3>
-<p>Deploy scalable AI applications using AWS.</p>
-</div>
-
-</div>
-
-</section>
-
-<section>
-
-<h2 class="title">Company Highlights</h2>
-
-<div class="stats">
-
-<div>
-<div class="number">120+</div>
-<p>AI Projects</p>
-</div>
-
-<div>
-<div class="number">60+</div>
-<p>Clients</p>
-</div>
-
-<div>
-<div class="number">25+</div>
-<p>Countries</p>
-</div>
-
-<div>
-<div class="number">99%</div>
-<p>Success Rate</p>
-</div>
-
-</div>
-
-</section>
-
-<section id="projects">
-
-<h2 class="title">AI Innovation</h2>
-
-<div class="gallery">
-
-<img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=80">
-
-<img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=900&q=80">
-
-<img src="https://images.unsplash.com/photo-1526378722484-bd91ca387e72?auto=format&fit=crop&w=900&q=80">
-
-</div>
-
-</section>
-
-<section id="contact">
-
-<h2 class="title">Contact Us</h2>
-
-<div class="contact">
-
-<h3>🚀 NeuroAI Technologies</h3>
-
-<p>📧 contact@neuroai.com</p>
-
-<p>📞 +91 98765 43210</p>
-
-<p>📍 Bengaluru, Karnataka, India</p>
-
-<br>
-
-<a href="#" class="btn">Start Your AI Journey</a>
-
-</div>
-
-</section>
-
-<footer>
-
-<h3>🤖 NeuroAI</h3>
-
-<p>Building the Future with Artificial Intelligence.</p>
-
-<p>© 2026 NeuroAI Technologies. All Rights Reserved.</p>
-
-</footer>
-
-<button id="top">↑</button>
 
 <script>
+/* HERO SLIDER AUTO CHANGE */
+let slides = document.querySelectorAll(".slide");
+let index = 0;
 
-let topBtn=document.getElementById("top");
-
-window.onscroll=function(){
-
-if(document.documentElement.scrollTop>200){
-
-topBtn.style.display="block";
-
-}else{
-
-topBtn.style.display="none";
-
-}
-
-}
-
-topBtn.onclick=function(){
-
-window.scrollTo({
-
-top:0,
-
-behavior:"smooth"
-
-});
-
-}
-
+setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+}, 3000);
 </script>
 
 </body>
